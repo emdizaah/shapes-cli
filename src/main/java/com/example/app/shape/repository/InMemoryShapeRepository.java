@@ -1,9 +1,11 @@
 package com.example.app.shape.repository;
 
+import com.example.app.shape.Point;
 import com.example.app.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InMemoryShapeRepository implements ShapeRepository {
 
@@ -22,7 +24,9 @@ public class InMemoryShapeRepository implements ShapeRepository {
     }
 
     @Override
-    public <T extends Shape> Iterable findAll() {
-        return SHAPES;
+    public List<Shape> findAllContaining(Point point) {
+        return SHAPES.stream()
+                .filter(s -> s.isPointInShape(point))
+                .collect(Collectors.toList());
     }
 }

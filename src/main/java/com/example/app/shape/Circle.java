@@ -47,7 +47,7 @@ public class Circle extends Shape {
         Double y1 = point.getY();
         Double x2 = centerPoint.getX();
         Double y2 = centerPoint.getY();
-        return Math.sqrt((x1 - x2)*(x1 - x2) - (y1 - y2)*(y1 - y2)) <= radius;
+        return Math.sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)) <= radius;
     }
 
     @Override
