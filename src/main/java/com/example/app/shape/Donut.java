@@ -20,7 +20,7 @@ public class Donut extends Shape {
 
         String[] args = input.split(" ");
 
-        expectNumberOfArgsEqualTo(args, 5);
+        validateInputForShape(args, 5);
         try {
 
             Double pointX = Double.parseDouble(args[1]);

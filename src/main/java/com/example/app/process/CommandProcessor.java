@@ -2,13 +2,13 @@ package com.example.app.process;
 
 import com.example.app.shape.Point;
 import com.example.app.shape.Shape;
-import com.example.app.shape.ShapeProcessor;
+import com.example.app.shape.ShapeFactory;
 import com.example.app.shape.repository.ShapeRepository;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static com.example.app.shape.ShapeProcessor.*;
+import static com.example.app.shape.ShapeFactory.*;
 
 public class CommandProcessor {
 
@@ -30,20 +30,20 @@ public class CommandProcessor {
             "    help\n";
 
 
-    private final ShapeProcessor shapeProcessor;
+    private final ShapeFactory shapeFactory;
     private final ShapeRepository shapeRepository;
 
-    public CommandProcessor(ShapeProcessor shapeProcessor, ShapeRepository shapeRepository) {
-        this.shapeProcessor = shapeProcessor;
+    public CommandProcessor(ShapeFactory shapeFactory, ShapeRepository shapeRepository) {
+        this.shapeFactory = shapeFactory;
         this.shapeRepository = shapeRepository;
     }
 
-    public void process(String input) {
+    public void processCommand(String input) {
 
         if (input.equals("help")) {
             showHelp();
         } else if (isCreateShapeCommand(input)) {
-            processShape(input);
+            processShapeInput(input);
         } else if (inputHasTwoDecimals(input)) {
             processPointInput(input);
         } else {
@@ -56,8 +56,8 @@ public class CommandProcessor {
     private void processPointInput(String input) {
         String[] args = input.split(" ");
         Point point = Point.of(Double.parseDouble(args[0]), Double.parseDouble(args[1]));
-
         System.out.println("Checking for shapes with " + point + " inside");
+
         List<Shape> shapesContainingPoint = shapeRepository.findAllContaining(point);
         shapesContainingPoint.stream()
                 .forEach(s -> System.out.println(s + ", has area: " + s.getArea()));
@@ -68,8 +68,8 @@ public class CommandProcessor {
         System.out.println("Total area: " + totalArea);
     }
 
-    private void processShape(String input) {
-        Shape shape = shapeProcessor.processShape(input);
+    private void processShapeInput(String input) {
+        Shape shape = shapeFactory.createShape(input);
         shapeRepository.saveShape(shape);
     }
 
@@ -93,7 +93,6 @@ public class CommandProcessor {
     }
 
     private boolean isCreateShapeCommand(String input) {
-        String firstArg = input.split(" ")[0];
-        return SUPPORTED_SHAPES.stream().anyMatch(s -> s.equals(firstArg));
+        return SUPPORTED_SHAPES.stream().anyMatch(s -> input.startsWith(s));
     }
 }

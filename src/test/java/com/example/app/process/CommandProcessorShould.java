@@ -1,6 +1,6 @@
 package com.example.app.process;
 
-import com.example.app.shape.ShapeProcessor;
+import com.example.app.shape.ShapeFactory;
 import com.example.app.shape.repository.ShapeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 public class CommandProcessorShould {
 
     @Mock
-    private ShapeProcessor shapeProcessor;
+    private ShapeFactory shapeFactory;
 
     @Mock
     private ShapeRepository shapeRepository;
@@ -24,7 +24,7 @@ public class CommandProcessorShould {
 
     @Before
     public void setUp() throws Exception {
-        processor = new CommandProcessor(shapeProcessor, shapeRepository);
+        processor = new CommandProcessor(shapeFactory, shapeRepository);
     }
 
     /*
@@ -42,7 +42,7 @@ public class CommandProcessorShould {
     public void call_ShapeRepository_save_when_valid_circle_is_provided() {
 
 
-        processor.process("circle 1 2 3");
+        processor.processCommand("circle 1 2 3");
 
         ArgumentCaptor<Shape> argCaptor = new ArgumentCaptor<>();
 
@@ -54,7 +54,7 @@ public class CommandProcessorShould {
     public void call_ShapeRepository_save_when_valid_donut_is_provided() {
 
 
-        processor.process("donut 4 2 3 5");
+        processor.processCommand("donut 4 2 3 5");
 
         ArgumentCaptor<Shape> argCaptor = new ArgumentCaptor<>();
 
@@ -66,7 +66,7 @@ public class CommandProcessorShould {
     public void call_ShapeRepository_save_when_valid_triangle_is_provided() {
 
 
-        processor.process("triangle 0 0 2 2 2 0");
+        processor.processCommand("triangle 0 0 2 2 2 0");
 
         ArgumentCaptor<Shape> argCaptor = new ArgumentCaptor<>();
 
@@ -79,8 +79,8 @@ public class CommandProcessorShould {
 
         String input = "circle 1 2 3";
 
-        processor.process(input);
+        processor.processCommand(input);
 
-        verify(shapeProcessor).processShape(input);
+        verify(shapeFactory).createShape(input);
     }
 }

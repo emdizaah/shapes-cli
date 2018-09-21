@@ -17,7 +17,7 @@ public class Triangle extends Shape {
     public static Triangle from(String input) {
         String[] args = input.split(" ");
 
-        expectNumberOfArgsEqualTo(args, 7);
+        validateInputForShape(args, 7);
 
         try {
 

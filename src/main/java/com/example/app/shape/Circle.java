@@ -17,7 +17,7 @@ public class Circle extends Shape {
     public static Circle from(String input) {
 
         String[] args = input.split(" ");
-        expectNumberOfArgsEqualTo(args, 4);
+        validateInputForShape(args, 4);
         try {
             Double pointX = Double.parseDouble(args[1]);
             Double pointY = Double.parseDouble(args[2]);

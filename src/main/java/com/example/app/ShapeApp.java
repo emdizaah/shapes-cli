@@ -3,7 +3,7 @@ package com.example.app;
 import com.example.app.exception.InvalidArgumentValueForShapeException;
 import com.example.app.exception.InvalidNumberOfArgumentsForShapeException;
 import com.example.app.process.CommandProcessor;
-import com.example.app.shape.ShapeProcessor;
+import com.example.app.shape.ShapeFactory;
 import com.example.app.shape.repository.InMemoryShapeRepository;
 import org.springframework.boot.CommandLineRunner;
 
@@ -18,7 +18,10 @@ public class ShapeApp implements CommandLineRunner {
     public void run(String... args) {
         Scanner scanner = new Scanner(System.in);
 
-        CommandProcessor processor = new CommandProcessor(new ShapeProcessor(), InMemoryShapeRepository.getInstance());
+        CommandProcessor processor = new CommandProcessor(
+                ShapeFactory.getInstance(),
+                InMemoryShapeRepository.getInstance()
+        );
 
         while (true) {
             System.out.println("Enter a shape or two points");
@@ -28,7 +31,7 @@ public class ShapeApp implements CommandLineRunner {
                 break;
             }
             try {
-                processor.process(input);
+                processor.processCommand(input);
             } catch (InvalidArgumentValueForShapeException | InvalidNumberOfArgumentsForShapeException e) {
                 System.out.println(e.getMessage());
             }
