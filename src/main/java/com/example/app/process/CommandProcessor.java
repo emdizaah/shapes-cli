@@ -47,8 +47,7 @@ public class CommandProcessor {
         } else if (inputHasTwoDecimals(input)) {
             processPointInput(input);
         } else {
-            System.out.println("Unknown command...");
-            showHelp();
+            System.out.println("Unknown command " + input);
         }
 
     }
@@ -71,6 +70,7 @@ public class CommandProcessor {
     private void processShapeInput(String input) {
         Shape shape = shapeFactory.createShape(input);
         shapeRepository.saveShape(shape);
+        System.out.println("=> " + shape);
     }
 
     private void showHelp() {
@@ -92,7 +92,7 @@ public class CommandProcessor {
         }
     }
 
-    private boolean isCreateShapeCommand(String input) {
+    private boolean     isCreateShapeCommand(String input) {
         return SUPPORTED_SHAPES.stream().anyMatch(s -> input.startsWith(s));
     }
 }
