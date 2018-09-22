@@ -1,7 +1,5 @@
 package com.example.app.shape;
 
-import com.example.app.exception.InvalidArgumentValueForShapeException;
-
 import static java.lang.Math.PI;
 
 public class Donut extends Shape {
@@ -10,33 +8,15 @@ public class Donut extends Shape {
     private Double innerRadius;
     private Double outerRadius;
 
-    public Donut(Point centerPoint, Double innerRadius, Double outerRadius) {
+    private Donut(Point centerPoint, Double innerRadius, Double outerRadius) {
         this.centerPoint = centerPoint;
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
     }
 
-    public static Donut from(String input) {
 
-        String[] args = input.split(" ");
-
-        validateInputForShape(args, 5);
-        try {
-
-            Double pointX = Double.parseDouble(args[1]);
-            Double pointY = Double.parseDouble(args[2]);
-            Double radius1 = Double.parseDouble(args[3]);
-            Double radius2 = Double.parseDouble(args[4]);
-            if (radius1 < radius2) {
-                return new Donut(Point.of(pointX, pointY), radius1, radius2);
-            } else {
-                return new Donut(Point.of(pointX, pointY), radius2, radius1);
-            }
-        } catch (NumberFormatException nfe) {
-            throw new InvalidArgumentValueForShapeException(String.format(ERROR_PARSE, args[0]));
-
-        }
-
+    public static Donut of(Point center, Double innerRadius, Double outerRadius) {
+        return new Donut(center, innerRadius, outerRadius);
     }
 
 
@@ -74,8 +54,8 @@ public class Donut extends Shape {
                 id,
                 centerPoint.getX(),
                 centerPoint.getY(),
-                getInnerRadius(),
-                getOuterRadius()
+                innerRadius,
+                outerRadius
         );
     }
 }

@@ -1,7 +1,5 @@
 package com.example.app.shape;
 
-import com.example.app.exception.InvalidArgumentValueForShapeException;
-
 public class Triangle extends Shape {
 
     private Point vertexOnePoint;
@@ -14,29 +12,8 @@ public class Triangle extends Shape {
         this.vertexThreePoint = vertexThreePoint;
     }
 
-    public static Triangle from(String input) {
-        String[] args = input.split(" ");
-
-        validateInputForShape(args, 7);
-
-        try {
-
-            Double vertexOneX = Double.parseDouble(args[1]);
-            Double vertexOneY = Double.parseDouble(args[2]);
-            Double vertexTwoX = Double.parseDouble(args[3]);
-            Double vertexTwoY = Double.parseDouble(args[4]);
-            Double vertexThreeX = Double.parseDouble(args[5]);
-            Double vertexThreeY = Double.parseDouble(args[6]);
-
-            return new Triangle(
-                    Point.of(vertexOneX, vertexOneY),
-                    Point.of(vertexTwoX, vertexTwoY),
-                    Point.of(vertexThreeX, vertexThreeY)
-            );
-        } catch(NumberFormatException nfe) {
-            throw new InvalidArgumentValueForShapeException(String.format(ERROR_PARSE, args[0]));
-
-        }
+    public static Triangle of(Point v1, Point v2, Point v3) {
+        return new Triangle(v1, v2, v3);
     }
 
     public Point getVertexOnePoint() {
@@ -89,9 +66,9 @@ public class Triangle extends Shape {
     public String toString() {
         return String.format("shape %s: triangle with vertices at (%s, %s), (%s, %s), (%s, %s)",
                 id,
-                getVertexOnePoint().getX(), getVertexOnePoint().getY(),
-                getVertexTwoPoint().getX(), getVertexTwoPoint().getY(),
-                getVertexThreePoint().getX(), getVertexThreePoint().getY()
+                vertexOnePoint.getX(), vertexOnePoint.getY(),
+                vertexTwoPoint.getX(), vertexTwoPoint.getY(),
+                vertexThreePoint.getX(), vertexThreePoint.getY()
         );
     }
 

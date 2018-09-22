@@ -81,6 +81,6 @@ public class CommandProcessorShould {
 
         processor.processCommand(input);
 
-        verify(shapeFactory).createShape(input);
+        verify(shapeFactory).createShapeFromCommand(input);
     }
 }

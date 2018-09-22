@@ -42,6 +42,8 @@ public class CommandProcessor {
 
         if (input.equals("help")) {
             showHelp();
+        } else if(input.equals("exit")) {
+            System.exit(0);
         } else if (isCreateShapeCommand(input)) {
             processShapeInput(input);
         } else if (inputHasTwoDecimals(input)) {
@@ -68,7 +70,7 @@ public class CommandProcessor {
     }
 
     private void processShapeInput(String input) {
-        Shape shape = shapeFactory.createShape(input);
+        Shape shape = shapeFactory.createShapeFromCommand(input);
         shapeRepository.saveShape(shape);
         System.out.println("=> " + shape);
     }

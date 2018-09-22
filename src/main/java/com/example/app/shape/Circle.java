@@ -1,7 +1,5 @@
 package com.example.app.shape;
 
-import com.example.app.exception.InvalidArgumentValueForShapeException;
-
 import static java.lang.Math.PI;
 
 public class Circle extends Shape {
@@ -14,18 +12,8 @@ public class Circle extends Shape {
         this.radius = radius;
     }
 
-    public static Circle from(String input) {
-
-        String[] args = input.split(" ");
-        validateInputForShape(args, 4);
-        try {
-            Double pointX = Double.parseDouble(args[1]);
-            Double pointY = Double.parseDouble(args[2]);
-            Double radius = Double.parseDouble(args[3]);
-            return new Circle(Point.of(pointX, pointY), radius);
-        } catch (NumberFormatException nfe) {
-            throw new InvalidArgumentValueForShapeException(String.format(ERROR_PARSE, args[0]));
-        }
+    public static Circle of(Point center, Double radius) {
+        return new Circle(center, radius);
     }
 
     public Point getCenterPoint() {

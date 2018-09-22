@@ -3,6 +3,7 @@ package com.example.app;
 import com.example.app.exception.InvalidArgumentValueForShapeException;
 import com.example.app.exception.InvalidNumberOfArgumentsForShapeException;
 import com.example.app.process.CommandProcessor;
+import com.example.app.util.RandomShapeGenerator;
 import com.example.app.shape.ShapeFactory;
 import com.example.app.shape.repository.InMemoryShapeRepository;
 import org.apache.commons.cli.*;
@@ -21,6 +22,8 @@ public class ShapeApp implements CommandLineRunner {
 
     public void run(String... args) {
 
+        RandomShapeGenerator.writeRandomShapesToFile(100000, "shapes");
+
         CommandProcessor processor = new CommandProcessor(
                 ShapeFactory.getInstance(),
                 InMemoryShapeRepository.getInstance()
@@ -37,10 +40,6 @@ public class ShapeApp implements CommandLineRunner {
         while (true) {
             System.out.println("Enter a shape or two points");
             String input = scanner.nextLine();
-            String firstArg = input.split(" ")[0];
-            if (firstArg.equals("exit")) {
-                break;
-            }
             try {
                 processor.processCommand(input);
             } catch (InvalidArgumentValueForShapeException | InvalidNumberOfArgumentsForShapeException e) {
@@ -57,22 +56,24 @@ public class ShapeApp implements CommandLineRunner {
 
         try {
             CommandLine cmd = parser.parse(options, args);
-            parser.parse(options, args);
 
-            String fileName = cmd.getOptionValue("f");
-            InputStream inputStream = new FileInputStream(fileName);
-            Scanner fileScanner = new Scanner(inputStream);
+            if (cmd.hasOption("f")) {
 
-            System.out.println("Reading from file " + fileName);
-            while (fileScanner.hasNextLine()) {
-                String input = fileScanner.nextLine();
-                try {
-                    processor.processCommand(input);
-                } catch (InvalidArgumentValueForShapeException | InvalidNumberOfArgumentsForShapeException e) {
-                    System.out.println("Failed to create shape with input " + input);
+                String fileName = cmd.getOptionValue("f");
+                InputStream inputStream = new FileInputStream(fileName);
+                Scanner fileScanner = new Scanner(inputStream);
+
+                System.out.println("Reading from file " + fileName);
+                while (fileScanner.hasNextLine()) {
+                    String input = fileScanner.nextLine();
+                    try {
+                        processor.processCommand(input);
+                    } catch (InvalidArgumentValueForShapeException | InvalidNumberOfArgumentsForShapeException e) {
+                        System.out.println("Failed to create shape with input " + input);
+                    }
                 }
+                System.out.println("Done creating shapes from file");
             }
-            System.out.println("Done creating shapes from file");
 
         } catch (ParseException e) {
             System.out.println(e.getMessage());
