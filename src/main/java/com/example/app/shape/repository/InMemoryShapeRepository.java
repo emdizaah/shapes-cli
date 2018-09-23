@@ -12,7 +12,9 @@ public class InMemoryShapeRepository implements ShapeRepository {
     private static final InMemoryShapeRepository INSTANCE = new InMemoryShapeRepository();
     private static final List<Shape> SHAPES = new ArrayList();
 
-    private InMemoryShapeRepository() {}
+    private InMemoryShapeRepository() {
+        System.out.println("Using in memnory shape repository");
+    }
 
     public static InMemoryShapeRepository getInstance() {
         return INSTANCE;

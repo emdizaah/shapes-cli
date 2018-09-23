@@ -6,7 +6,7 @@ import org.junit.Test;
 public class RandomShapeGeneratorTest {
 
     @Test
-    public void name() {
-        RandomShapeGenerator.createRandomShapeInput();
+    public void populateRandomShapes() {
+        RandomShapeGenerator.writeRandomShapesToFile(1000, "shapes");
     }
 }

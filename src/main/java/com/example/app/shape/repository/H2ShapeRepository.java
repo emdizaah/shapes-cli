@@ -19,11 +19,7 @@ public class H2ShapeRepository implements ShapeRepository {
     private static final H2ShapeRepository instance = new H2ShapeRepository();
 
     private H2ShapeRepository() {
-        try {
-            DataSource.getConnection().createStatement().execute("SELECT 1+1");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Using H2 database shape repository");
     }
 
     public static H2ShapeRepository getInstance() {
