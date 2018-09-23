@@ -3,18 +3,17 @@ package com.example.app;
 import com.example.app.exception.InvalidArgumentValueForShapeException;
 import com.example.app.exception.InvalidNumberOfArgumentsForShapeException;
 import com.example.app.process.CommandProcessor;
-import com.example.app.util.RandomShapeGenerator;
 import com.example.app.shape.ShapeFactory;
-import com.example.app.shape.repository.InMemoryShapeRepository;
+import com.example.app.shape.repository.H2ShapeRepository;
+import com.example.app.util.RandomShapeGenerator;
 import org.apache.commons.cli.*;
-import org.springframework.boot.CommandLineRunner;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
-public class ShapeApp implements CommandLineRunner {
+public class ShapeApp {
 
     public static void main(String[] args) {
         new ShapeApp().run(args);
@@ -22,11 +21,12 @@ public class ShapeApp implements CommandLineRunner {
 
     public void run(String... args) {
 
-        RandomShapeGenerator.writeRandomShapesToFile(100000, "shapes");
+        RandomShapeGenerator.writeRandomShapesToFile(100, "shapes");
 
         CommandProcessor processor = new CommandProcessor(
                 ShapeFactory.getInstance(),
-                InMemoryShapeRepository.getInstance()
+                //InMemoryShapeRepository.getInstance()
+                H2ShapeRepository.getInstance()
         );
 
         fillShapesFromFileIfPresent(processor, args);
