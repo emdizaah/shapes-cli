@@ -76,6 +76,7 @@ public class ShapeApp {
                 .longOpt(FILL_RANDOM_OPTION)
                 .desc("fill n random shapes to file")
                 .hasArg(true)
+                .optionalArg(false)
                 .numberOfArgs(1)
                 .build();
 
