@@ -6,7 +6,6 @@ import com.example.app.process.CommandProcessor;
 import com.example.app.shape.ShapeFactory;
 import com.example.app.shape.repository.H2ShapeRepository;
 import com.example.app.shape.repository.InMemoryShapeRepository;
-import com.example.app.shape.repository.ShapeRepository;
 import com.example.app.util.RandomShapeGenerator;
 import org.apache.commons.cli.*;
 
