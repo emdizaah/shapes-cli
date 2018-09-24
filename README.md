@@ -29,6 +29,9 @@ You can also generate a number of random shapes and write to file provided. Use 
 
 ## Usage
 
+#### Prerequisites
+*Maven 3* and *Java 8* 
+
 Building with Maven:
     
     mvn package
