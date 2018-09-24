@@ -20,14 +20,14 @@ public class CommandProcessor {
 
     private static final String HELP_MESSAGE =
             "\n" +
-            "Enter a shape by providing shape type first and then coordinates for shape:\n" +
-            "    circle x y R - creates circle with center at point (x, y) with radius r \n" +
-            "    donut x y R1 R2 - creates donut with center at point (x, y) with inner radius R1 and outer radius R2\n" +
-            "    triangle x1 y1 x2 y2 x3 y3 - creates triangle with vertices (x1, y1) (x2, y2) (x3, y3)\n" +
-            "For exiting program enter:\n" +
-            "    exit\n" +
-            "Help page:\n" +
-            "    help\n";
+                    "Enter a shape by providing shape type first and then coordinates for shape:\n" +
+                    "    circle x y R - creates circle with center at point (x, y) with radius r \n" +
+                    "    donut x y R1 R2 - creates donut with center at point (x, y) with inner radius R1 and outer radius R2\n" +
+                    "    triangle x1 y1 x2 y2 x3 y3 - creates triangle with vertices (x1, y1) (x2, y2) (x3, y3)\n" +
+                    "Exit program:\n" +
+                    "    exit\n" +
+                    "Help page:\n" +
+                    "    help\n";
 
 
     private final ShapeFactory shapeFactory;
@@ -40,10 +40,10 @@ public class CommandProcessor {
 
     public void processCommand(String input) {
 
-        if (input.equals("help")) {
+        if (input.trim().equals("help")) {
             showHelp();
-        } else if(input.equals("exit")) {
-            System.exit(0);
+        } else if (input.trim().equals("exit")) {
+            exit();
         } else if (isCreateShapeCommand(input)) {
             processShapeInput(input);
         } else if (inputHasTwoDecimals(input)) {
@@ -52,6 +52,11 @@ public class CommandProcessor {
             System.out.println("Unknown command " + input);
         }
 
+    }
+
+    private void exit() {
+        System.out.println("Exiting...");
+        System.exit(0);
     }
 
     private void processPointInput(String input) {
@@ -94,7 +99,7 @@ public class CommandProcessor {
         }
     }
 
-    private boolean     isCreateShapeCommand(String input) {
+    private boolean isCreateShapeCommand(String input) {
         return SUPPORTED_SHAPES.stream().anyMatch(s -> input.startsWith(s));
     }
 }
